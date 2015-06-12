@@ -9,7 +9,7 @@ import org.hkfree.ospf.model.netchange.CostDifference;
 import org.hkfree.ospf.tools.Factory;
 
 /**
- * Table model sloužící pro zobrazení změn costů
+ * Table model used for displaying changes in COST
  * @author Jakub Menzel
  * @author Jan Schovánek
  */
@@ -22,7 +22,7 @@ public class CostDifferenceTableModel extends AbstractTableModel {
 
 
     /**
-     * Konstruktor
+     * Constructor
      * @param costDifferences
      */
     public CostDifferenceTableModel(List<CostDifference> costDifferences) {
@@ -35,7 +35,7 @@ public class CostDifferenceTableModel extends AbstractTableModel {
 
 
     /**
-     * Vrací počet sloupců tabulky
+     * Returns the number of table columns
      * @return int
      */
     public int getColumnCount() {
@@ -44,7 +44,7 @@ public class CostDifferenceTableModel extends AbstractTableModel {
 
 
     /**
-     * Vrací počet řádků tabulky
+     * Returns the number of table rows
      * @return int
      */
     public int getRowCount() {
@@ -53,7 +53,7 @@ public class CostDifferenceTableModel extends AbstractTableModel {
 
 
     /**
-     * Vrací hodnoty buněk tabulky
+     * Returns the value of table cells
      * @return Object
      */
     public Object getValueAt(int row, int column) {

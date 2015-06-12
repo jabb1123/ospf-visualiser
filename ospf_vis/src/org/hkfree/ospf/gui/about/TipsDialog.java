@@ -16,7 +16,7 @@ import org.hkfree.ospf.model.Constants.LANGUAGE;
 import org.hkfree.ospf.tools.Factory;
 
 /**
- * Třída představující Dialogové okno "Tipy"
+ * A class that represents dialog "Tips"
  * @author Jan Schovánek
  */
 public class TipsDialog extends JDialog implements ActionListener {
@@ -27,8 +27,8 @@ public class TipsDialog extends JDialog implements ActionListener {
 
 
     /**
-     * Konstruktor třídy - volá metodu pro vytvoření layoutu okna - nastaví oknu
-     * potřebné parametry
+     * Constructor - method calls for the creation of the layout window - 
+     * the window sets the necessary parameters
      * @param lng
      */
     public TipsDialog(Frame okno, LANGUAGE lng) {
@@ -42,7 +42,7 @@ public class TipsDialog extends JDialog implements ActionListener {
 
 
     /**
-     * Metoda, která použije komponenty a vytvoří celý layout hlavního okna
+     * The method, which uses components and creates the whole layout of the main window
      */
     private void createGUI(Frame okno) {
 	this.setLayout(new BorderLayout());

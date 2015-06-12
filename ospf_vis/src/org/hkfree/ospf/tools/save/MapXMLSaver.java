@@ -21,7 +21,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Třída sloužící pro ukládání rozpracované práce návrhu sítě do XML
+ * The class used to store unfinished work network design to XML
  * @author Jakub Menzel
  */
 public class MapXMLSaver {
@@ -33,13 +33,13 @@ public class MapXMLSaver {
 
 
     /**
-     * Konstruktor
+     * Constructor
      */
     public MapXMLSaver() {}
 
 
     /**
-     * Nastaví mapModel
+     * Sets mapModel
      * @param mapModel
      */
     public void setMapModel(MapModel mapModel) {
@@ -48,7 +48,7 @@ public class MapXMLSaver {
 
 
     /**
-     * Nastaví pozice routerů, které byly zobrazeny v grafu
+     * Sets the position of routers, which have been shown in the chart
      * @param positions
      */
     public void setVertexPositions(Map<RouterVertex, Point2D> positions) {
@@ -57,7 +57,7 @@ public class MapXMLSaver {
 
 
     /**
-     * Nastaví výstupní soubor
+     * Specify the output file
      * @param outputFile
      */
     public void setOutputFile(File outputFile) {
@@ -66,7 +66,7 @@ public class MapXMLSaver {
 
 
     /**
-     * Vytvoří identifikátory routerů
+     * Creates identifiers for routers
      */
     public void createRVertexIdentificators() {
 	int i = 0;
@@ -78,7 +78,7 @@ public class MapXMLSaver {
 
 
     /**
-     * Vrací integer reprezentaci bool hodnoty
+     *Returns the integer representation of bool values
      * @param value
      * @return int
      */
@@ -91,7 +91,7 @@ public class MapXMLSaver {
 
 
     /**
-     * Vytvoří dokument z modelu a uloží ho do zvoleného souboru
+     * Creates a document from the model and saves it to a file
      */
     public void createDocumentFromModel() {
 	DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();

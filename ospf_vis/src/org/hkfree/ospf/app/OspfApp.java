@@ -3,7 +3,7 @@ package org.hkfree.ospf.app;
 import org.hkfree.ospf.gui.ospfwin.OspfWin;
 
 /**
- * Spouštěcí třída aplikace
+ * Startup class applications
  * 
  * @author Jakub Menzel
  */

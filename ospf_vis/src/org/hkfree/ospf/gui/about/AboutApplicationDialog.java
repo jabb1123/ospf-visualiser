@@ -18,7 +18,7 @@ import org.hkfree.ospf.model.Constants;
 import org.hkfree.ospf.tools.Factory;
 
 /**
- * Třída představující Dialogové okno "O Aplikaci"
+ * Class for "About" Dialog
  * @author Jakub Menzel
  * @author Jan Schovánek
  */
@@ -31,8 +31,8 @@ public class AboutApplicationDialog extends JDialog implements ActionListener {
 
 
     /**
-     * Konstruktor třídy - volá metodu pro vytvoření layoutu okna - nastaví oknu
-     * potřebné parametry
+     * Constructor - method calls for the creation of the layout window -
+     *  the window sets the necessary parameters
      */
     public AboutApplicationDialog(Frame okno) {
 	super(okno);
@@ -46,7 +46,7 @@ public class AboutApplicationDialog extends JDialog implements ActionListener {
 
 
     /**
-     * Metoda, která použije komponenty a vytvoří celý layout hlavního okna
+     * The method, which uses components and creates the whole layout of the main window
      */
     private void createGUI(Frame okno) {
 	JLabel ikona = new JLabel(new ImageIcon(this.getClass().getResource(Constants.URL_IMG_GUI + "icon.png")));
@@ -87,8 +87,7 @@ public class AboutApplicationDialog extends JDialog implements ActionListener {
 
 
     /**
-     * Doimplementovaná metoda volaná actionlisenerem, když nastane stisknutí
-     * tlačítka
+     * Implement method called actionLisener, when button pressed
      */
     public void actionPerformed(ActionEvent e) {
 	if (e.getSource() == btnOk)

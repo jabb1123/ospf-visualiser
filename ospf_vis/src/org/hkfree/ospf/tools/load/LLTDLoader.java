@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * Třída pro načítání, parsování a vrácení LLTD modelů.
+ * The class for reading, parsing and return LLTD models.
  * @author Jan Schovánek
  */
 public class LLTDLoader {
@@ -34,7 +34,7 @@ public class LLTDLoader {
 
 
     /**
-     * Stažení a načteni LLTD dat
+     * Downloading and retrieving LLTD data
      * @param lltdModels
      * @param urlLltdData
      * @throws IOException
@@ -45,18 +45,18 @@ public class LLTDLoader {
 	    ParserConfigurationException,
 	    SAXException {
 	List<LLTDModel> result = new ArrayList<LLTDModel>();
-	// stazeni dat
+	// Download data
 	URL url = new URL(urlLltdData);
 	URLConnection conn = url.openConnection();
 	BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	String line;
 	List<String> modelsLines = new ArrayList<String>();
-	// ziskani radku obsahujici modely
+	// Obtaining lines containing models
 	while ((line = br.readLine()) != null) {
-	    if (line.endsWith("</lltd></td></tr>")) // takto konci radek obsahujici retezec LLTD modelu
+	    if (line.endsWith("</lltd></td></tr>")) //thus the end of the line containing the string LLTD model
 		modelsLines.add(line);
 	}
-	// rozparsovani radku a ziskani modelu
+	// parsing row and obtaining model
 	for (String modelString : modelsLines) {
 	    result.add(loadModel(modelString));
 	}
@@ -66,8 +66,8 @@ public class LLTDLoader {
 
 
     /**
-     * Rozparsuje řádek a vrací obsahující LLTD model
-     * @param line řádek obsahující model
+     * Parses the line and returns a model containing LLTD
+     * @param line line-containing model
      * @return LLTDModel
      * @throws ParserConfigurationException
      * @throws IOException
@@ -80,25 +80,25 @@ public class LLTDLoader {
 	List<Relation> relations = new ArrayList<Relation>();
 	Device d = null;
 	Relation r = null;
-	// ziskani XML ze stringu
+	// Acquired from the XML string
 	Pattern pattern = Pattern.compile("<\\?xml.*</lltd>");
 	Matcher matcher = pattern.matcher(line);
 	matcher.find();
 	DocumentBuilder newDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 	Document doc = newDocumentBuilder.parse(new ByteArrayInputStream(matcher.group(0).getBytes()));
 	doc.getDocumentElement().normalize();
-	// ziskani modelu z XML
+	// Obtaining a model from XML
 	NodeList ips = doc.getElementsByTagName("traceroute");
 	NodeList elems = doc.getElementsByTagName("device");
 	NodeList links = doc.getElementsByTagName("relation");
 	model.setDate(new Date(Long.valueOf(doc.getDocumentElement().getAttribute("millis"))));
 	model.setPublicIP(doc.getDocumentElement().getAttribute("publicIP"));
-	// nacitani IP adres z traceroutu
+	// Reads the IP address from traceroute
 	for (int i = 0; i < ips.getLength(); i++) {
 	    Element e = (Element) ips.item(i);
 	    traceroute.add(e.getElementsByTagName("ip").item(0).getTextContent());
 	}
-	// nacitani zarizeni
+	// the device is loading
 	for (int i = 0; i < elems.getLength(); i++) {
 	    Element e = (Element) elems.item(i);
 	    d = new Device();
@@ -108,7 +108,7 @@ public class LLTDLoader {
 	    d.setIpv6(e.getElementsByTagName("ipv6").item(0).getTextContent());
 	    devices.add(d);
 	}
-	// nacitani vztahu (spoju)
+	// loading of the relationship (connections)
 	for (int i = 0; i < links.getLength(); i++) {
 	    Element e = (Element) links.item(i);
 	    r = new Relation();
@@ -125,10 +125,10 @@ public class LLTDLoader {
 
 
     /**
-     * Vrací zařízení dle jeho názvu (mac adresy)
-     * @param name mach adresa zařízení
-     * @param devices seznam všech zařízení
-     * @return null pokud nenajde (nemělo by nastat), jinak zařízení
+     * Returning the equipment according to its name (MAC address)
+     * @param name device MAC Address
+     * @param devices List all devices
+     * @return null if it can not find (should not happen), other equipment
      */
     private static Device getDevice(String name, List<Device> devices) {
 	for (Device d : devices) {
@@ -136,8 +136,8 @@ public class LLTDLoader {
 		return d;
 	    }
 	}
-	// muze se stat ze se zarizeni nenajde
-	// vytvori se nove (aby bylo mozne sestavit graf)
+	// It may happen that the device is not found
+	// Create new (to allow the compilation chart)
 	Device d = new Device();
 	d.setSource(name);
 	return d;

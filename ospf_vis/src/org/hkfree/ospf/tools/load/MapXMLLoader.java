@@ -18,7 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Třída sloužící k načtení MapModelu z XML dokumentu určité struktury
+ * Class used to retrieve an XML document from MapModelu a structure
  * @author Jakub Menzel
  */
 public class MapXMLLoader {
@@ -30,7 +30,7 @@ public class MapXMLLoader {
 
 
     /**
-     * Vrací bool hodnotu z 0 nebo 1
+     * Returns BOOL value of 0 or 1
      * @param i
      * @return boolean
      */
@@ -40,7 +40,7 @@ public class MapXMLLoader {
 
 
     /**
-     * Vrací MapModel
+     * Returns MapModel
      * @return mapModel
      */
     public MapModel getMapModel() {
@@ -49,7 +49,7 @@ public class MapXMLLoader {
 
 
     /**
-     * Vrací pozice vrcholů
+     * Returns the position of peaks
      * @return positions
      */
     public Map<RouterVertex, Point2D> getRVertexPositions() {
@@ -58,7 +58,7 @@ public class MapXMLLoader {
 
 
     /**
-     * Nastavuje vstupní soubor ke zpracování
+     * Sets the input file to be processed
      * @param inputFile
      */
     public void setInputFile(File inputFile) {
@@ -67,7 +67,7 @@ public class MapXMLLoader {
 
 
     /**
-     * Načte MapModel ze souboru
+     * MapModel retrieves from file
      */
     public void loadModelFromDocument() {
 	DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
@@ -139,7 +139,7 @@ public class MapXMLLoader {
 
 
     /**
-     * vrací obsah elementu
+     * returns element content
      * @return int
      */
     public int getTagIntData(Element el) {
@@ -152,7 +152,7 @@ public class MapXMLLoader {
 
 
     /**
-     * vrací obsah elementu
+     * returns element content
      * @return double
      */
     public double getTagDoubleData(Element el) {
@@ -165,7 +165,7 @@ public class MapXMLLoader {
 
 
     /**
-     * vrací obsah elementu
+     * returns element content
      * @return string
      */
     public String getTagStringData(Element el) {

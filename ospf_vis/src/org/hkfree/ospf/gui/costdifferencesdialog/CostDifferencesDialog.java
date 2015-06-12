@@ -16,7 +16,7 @@ import org.hkfree.ospf.model.netchange.CostDifference;
 import org.hkfree.ospf.tools.Factory;
 
 /**
- * Třída představující dialog pro zobrazení změn costů
+ * A class that represents a dialog showing changes for COST
  * @author Jakub Menzel
  * @author Jan Schovánek
  */
@@ -29,7 +29,7 @@ public class CostDifferencesDialog extends JDialog implements ActionListener {
 
 
     /**
-     * Konstruktor
+     * Constructor
      * @param costDifferences
      */
     public CostDifferencesDialog(List<CostDifference> costDifferences) {
@@ -39,7 +39,7 @@ public class CostDifferencesDialog extends JDialog implements ActionListener {
 
 
     /**
-     * Vytvoří GUI
+     * Generates GUI
      */
     public void createGUI() {
 	JTable table = new JTable(new CostDifferenceTableModel(this.costDifferences));
@@ -69,7 +69,7 @@ public class CostDifferencesDialog extends JDialog implements ActionListener {
 
 
     /**
-     * Odchytávání událostí
+     * Event capture
      */
     public void actionPerformed(ActionEvent e) {
 	if (e.getSource() == btnOk) {

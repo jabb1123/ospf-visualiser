@@ -17,7 +17,7 @@ import javax.swing.ListSelectionModel;
  * @author Jakub Menzel
  * @author Jan Schovánek
  */
-public class CheckBoxList extends JList {
+public class CheckBoxList extends JList<Object> {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class CheckBoxList extends JList {
      */
     public CheckBoxList() {
 	super();
-	setModel(new DefaultListModel());
+	setModel(new DefaultListModel<Object>());
 	setCellRenderer(new CheckboxCellRenderer());
 	addMouseListener(new MouseAdapter() {
 
@@ -54,7 +54,7 @@ public class CheckBoxList extends JList {
      */
     public int[] getCheckedIdexes() {
 	List<Integer> list = new ArrayList<Integer>();
-	DefaultListModel dlm = (DefaultListModel) getModel();
+	DefaultListModel<?> dlm = (DefaultListModel<?>) getModel();
 	for (int i = 0; i < dlm.size(); ++i) {
 	    Object obj = getModel().getElementAt(i);
 	    if (obj instanceof JCheckBox) {
@@ -66,7 +66,7 @@ public class CheckBoxList extends JList {
 	}
 	int[] indexes = new int[list.size()];
 	for (int i = 0; i < list.size(); ++i) {
-	    indexes[i] = ((Integer) list.get(i)).intValue();
+	    indexes[i] = list.get(i).intValue();
 	}
 	return indexes;
     }
@@ -78,7 +78,7 @@ public class CheckBoxList extends JList {
      */
     public List<JCheckBox> getCheckedItems() {
 	List<JCheckBox> list = new ArrayList<JCheckBox>();
-	DefaultListModel dlm = (DefaultListModel) getModel();
+	DefaultListModel<?> dlm = (DefaultListModel<?>) getModel();
 	for (int i = 0; i < dlm.size(); ++i) {
 	    Object obj = getModel().getElementAt(i);
 	    if (obj instanceof JCheckBox) {
@@ -96,7 +96,7 @@ public class CheckBoxList extends JList {
      * Nastaví vše zaškrtnuto
      */
     public void setAllChecked() {
-	DefaultListModel dlm = (DefaultListModel) getModel();
+	DefaultListModel<?> dlm = (DefaultListModel<?>) getModel();
 	for (int i = 0; i < dlm.size(); ++i) {
 	    Object obj = getModel().getElementAt(i);
 	    if (obj instanceof JCheckBox) {
@@ -111,7 +111,7 @@ public class CheckBoxList extends JList {
      * Nastaví vše odškrtnuto
      */
     public void setNoneChecked() {
-	DefaultListModel dlm = (DefaultListModel) getModel();
+	DefaultListModel<?> dlm = (DefaultListModel<?>) getModel();
 	for (int i = 0; i < dlm.size(); ++i) {
 	    Object obj = getModel().getElementAt(i);
 	    if (obj instanceof JCheckBox) {
@@ -131,7 +131,7 @@ class CheckboxCellRenderer extends DefaultListCellRenderer {
     private static final long serialVersionUID = 1L;
 
 
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 	    boolean cellHasFocus) {
 	if (value instanceof ModelCheckBoxItem) {
 	    ModelCheckBoxItem checkbox = (ModelCheckBoxItem) value;

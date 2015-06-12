@@ -20,8 +20,8 @@ import org.hkfree.ospf.tools.geo.GeoCoordinatesTransformator;
 import org.hkfree.ospf.tools.ip.IpCalculator;
 
 /**
- * Třída, která slouží k načítání OspfModelu z externích souborů.
- * Načítání může probíhat dle nastavení z místního adresáře, nebo z webu.
+* A class that is used to retrieve OspfModel from external files.
+  * Reading can take place according to the settings of the local directory or from the web.
  * @author Jakub Menzel
  * @author Jan Schovánek
  */
@@ -37,7 +37,7 @@ public class OspfLoader {
 
 
     /**
-     * Metoda, která načte ze zadaného umístění topologii sítě routerů
+     *The method, which loads the specified location topology of the network routers
      * @throws IOException
      */
     public static void loadTopology(OspfModel model, BufferedReader input) throws IOException {
@@ -63,13 +63,13 @@ public class OspfLoader {
 		l.setLinkIDv4(linkName);
 		l.setSubnetMask(linkMask);
 		model.getLinks().add(l);
-		// čtení řádků než narazí na Attached Router
+		// Reading lines before they hit the Attached Router
 		while (!((radek = vstup.readLine()).contains("Attached Router"))) {}
-		// načtení první IP jdoucí do spoje
+		// Read the first IP connections going into
 		ipMatcher = ipPattern.matcher(radek);
 		ipMatcher.find();
 		model.addRouter(ipMatcher.group(0));
-		// načtení zbylých IP jdoucích do spoje
+		// Read the rest going into IP connections
 		while ((radek = vstup.readLine()).contains("Attached Router")) {
 		    ipMatcher = ipPattern.matcher(radek);
 		    ipMatcher.find();
@@ -81,7 +81,7 @@ public class OspfLoader {
 
 
     /**
-     * Metoda, která načte ze zadaného umístění ceny spojů načtené topologie
+     * The method, which loads the specified location prices joints loaded topologies
      * @throws IOException
      */
     public static void loadCosts(OspfModel model, String routerIP, BufferedReader input) throws IOException {
@@ -103,7 +103,7 @@ public class OspfLoader {
 		    act_spoje.add(s);
 	    }
 	    infoUzlu = input;
-	    // změnit cenu a ip interface routeru ve spojích kde router figuruje
+	 // Change the price and ip router interface in the router connections where figures	    
 	    while ((radek = infoUzlu.readLine()) != null) {
 		for (Link s : act_spoje) {
 		    if (radek.contains("Link ID") && radek.endsWith(s.getLinkIDv4())) {
@@ -118,7 +118,7 @@ public class OspfLoader {
 			cena = Integer.valueOf(costMatcher.group(1));
 			model.updateCost(s.getLinkIDv4(), router, interfaceIp, cena);
 		    } else if (radek.contains("Stub Network")) {
-			// nacitani stub spoje
+			// loading of stub connections
 			StubLink stub = new StubLink();
 			while (!(radek = infoUzlu.readLine()).contains("(Link ID) Net")) {}
 			ipMatcher = ipPattern.matcher(radek);
@@ -144,7 +144,7 @@ public class OspfLoader {
 
 
     /**
-     * Metoda, která načte ze zadaného umístění jména routerů a náležitě upraví model
+     * The method that loads specific location names routers and duly adjusted model
      * @throws IOException
      */
     public static void loadRouterNames(OspfModel model, BufferedReader input) throws IOException {
@@ -169,7 +169,7 @@ public class OspfLoader {
 
 
     /**
-     * Metoda, která načte ze zadaného umístění logy o výpadcích
+     * The method, which loads the logs from the specified location on outages
      * @param model
      * @param input
      * @throws ParseException
@@ -193,7 +193,7 @@ public class OspfLoader {
 
 
     /**
-     * Metoda, která načte ze zadaného umístění pozice routerů
+     * The method, which loads the specified location positions routers
      * @param model
      * @param input
      * @throws IOException
@@ -226,7 +226,7 @@ public class OspfLoader {
     public static void getTopologyFromData(OspfModel model, BufferedReader input) throws NumberFormatException,
 	    IOException {
 	try {
-	    // zapis dat do souboru
+	    // Writing data to a file
 	    // BufferedWriter out = new BufferedWriter(new FileWriter("out.txt"));
 	    // String s;
 	    // BufferedReader input2 = new BufferedReader(input);
@@ -259,7 +259,7 @@ public class OspfLoader {
 	    Pattern geoPattern = Pattern.compile(patternGeo);
 	    GeoCoordinatesTransformator geoCoorTransormator = new GeoCoordinatesTransformator();
 	    Matcher matcher = null;
-	    // prikazy
+	    // Script Commands
 	    String cmd1 = "Net Link States"; // "show ip ospf database network"
 	    String cmd2 = "Router Link States"; // "show ip ospf database router"
 	    String cmd3 = "AS External Link States"; // "show ip ospf database external"
@@ -267,8 +267,8 @@ public class OspfLoader {
 	    // String cmd5 = "show ipv6 ospf6 database router detail";
 	    String cmd6 = "AS Scoped Link State Database"; // "show ipv6 ospf6 database as-external detail"
 	    String cmd7 = "Area Scoped Link State Database"; // pozdeji bude urceno a jaka data jde
-	    String cmd8 = "router names"; // nacitani nazvu routeru
-	    String cmd9 = "geo positions"; // nacitani geo souradnic routeru
+	    String cmd8 = "router names"; // Loading of router names
+	    String cmd9 = "geo positions"; // loading of geo coordinates for router
 	    boolean isStub = false;
 	    int cmd = 0;
 	    while ((radek = input.readLine()) != null) {
@@ -302,7 +302,7 @@ public class OspfLoader {
 		}
 		switch (cmd) {
 		    case 1:
-			// nacitani topologie pro IPv4
+			// Reads topology for IPv4
 			if (radek.contains("Link State ID")) {
 			    int linkMask = 0;
 			    matcher = ipPattern.matcher(radek);
@@ -317,14 +317,14 @@ public class OspfLoader {
 			    l.setLinkIDv4(linkName);
 			    l.setSubnetMask(linkMask);
 			    model.getLinks().add(l);
-			    // čtení řádků než narazí na Attached Router
+			    // reading lines before they hit the Attached Router
 			    while (!((radek = input.readLine()).contains("Attached Router")))
 				;
-			    // načtení první IP jdoucí do spoje
+			    // load going into the first IP connections
 			    matcher = ipPattern.matcher(radek);
 			    matcher.find();
 			    model.addRouter(matcher.group(0));
-			    // načtení zbylých IP jdoucích do spoje
+			    // load going into the remaining IP connections
 			    while ((radek = input.readLine()).contains("Attached Router")) {
 				matcher = ipPattern.matcher(radek);
 				matcher.find();
@@ -333,7 +333,7 @@ public class OspfLoader {
 			}
 			break;
 		    case 2:
-			// nacitani dodatecnych dat pro IPv4
+			// Read additional data for IPv4
 			if (radek.contains("Link State ID")) {
 			    matcher = ipPattern.matcher(radek);
 			    matcher.find();
@@ -371,7 +371,7 @@ public class OspfLoader {
 			}
 			break;
 		    case 3:
-			// nacitani externich LSA a jejich masek
+			// Loading external LSA and their masks
 			if (radek.contains("Link State ID")) {
 			    matcher = ipPattern.matcher(radek);
 			    matcher.find();
@@ -401,14 +401,14 @@ public class OspfLoader {
 			    exLsa.setCost(cost);
 			    exLsa.setMetricType(metricType);
 			    exLsa.setNetwork(linkName);
-			    // TODO zjistit proc se router nenajde
+			    // TODO find out why the router is not found
 			    if (model.getRouterByIp(advRouter) != null) {
 				model.getRouterByIp(advRouter).getExternalLsa().add(exLsa);
 			    }
 			}
 			break;
 		    case 4:
-			// nacitani topologie pro IPv6
+			// loading of topology for IPv6
 			if (radek.contains("Link State ID")) {
 			    int linkMask = 0;
 			    matcher = ipPattern.matcher(radek);
@@ -420,11 +420,11 @@ public class OspfLoader {
 			    modelIPv6.getLinks().add(l);
 			    while (!((radek = input.readLine()).contains("Attached Router")))
 				;
-			    // načtení první IP jdoucí do spoje
+			    // load going into the first IP connections
 			    matcher = ipPattern.matcher(radek);
 			    matcher.find();
 			    modelIPv6.addRouter(matcher.group(0));
-			    // načtení zbylých IP jdoucích do spoje
+			    // load going into the remaining IP connections
 			    while ((radek = input.readLine()).contains("Attached Router")) {
 				matcher = ipPattern.matcher(radek);
 				matcher.find();
@@ -433,7 +433,7 @@ public class OspfLoader {
 			}
 			break;
 		    case 5:
-			// nacitani dodatecnych dat pro IPv6
+			// Read additional data for IPv6
 			if (radek.contains("Advertising Router")) {
 			    matcher = ipPattern.matcher(radek);
 			    matcher.find();
@@ -450,12 +450,12 @@ public class OspfLoader {
 			    matcher = ipPattern.matcher(radek);
 			    matcher.find();
 			    neighborRouter = matcher.group(0);
-			    // linkId, router, 2.router, cena
+			    // linkId, router, 2.router, cost
 			    modelIPv6.updateCostIPv6(neighborInterface, router, neighborRouter, cost);
 			}
 			break;
 		    case 6:
-			// nacitani externich lsa a masky pro IPv6
+			// Loading external LSA and masks for IPv6
 			if (radek.contains("Advertising Router")) {
 			    matcher = ipPattern.matcher(radek);
 			    matcher.find();
@@ -488,12 +488,12 @@ public class OspfLoader {
 			}
 			break;
 		    case 8:
-			// nacitani nazvu routeru
+			// loading of router names
 			boolean matches = false;
 			matcher = namePattern.matcher(radek);
 			matcher.find();
 			if (matcher.matches()) {
-			    // matcher dle stareho tvaru zapisu id routeru a jeho nazvu
+			    // matcher according to the shape of the old MODIFY id router and its nazvu
 			    matches = true;
 			    routerId = matcher.group(1);
 			    routerName = matcher.group(2);
@@ -501,14 +501,14 @@ public class OspfLoader {
 			    matcher = nameArpaPatern.matcher(radek);
 			    matcher.find();
 			    if (matcher.matches()) {
-				// matcher dle noveho tvaru zapisu id routeru a jeho nazvu z CGI
+				// matcher according to a new shape MODIFY id router and its names from the CGI
 				matches = true;
 				routerId = IpCalculator.getIpFromIpArpa(matcher.group(1));
 				routerName = matcher.group(3);
 			    }
 			}
 			if (matches) {
-			    // aspon jeden matcher nasel nazev routeru, najdi ho a pridej
+			    // just for one matcher found the name of the router, find them and add
 			    for (Router r : model.getRouters()) {
 				if (r.getId().equals(routerId) && !routerId.equals(routerName))
 				    r.setName(routerName);
@@ -516,7 +516,7 @@ public class OspfLoader {
 			}
 			break;
 		    case 9:
-			// nacitani geo souradnic
+			// loading of geo coordinates,
 			matcher = geoPattern.matcher(radek);
 			matcher.find();
 			if (matcher.matches()) {
@@ -530,10 +530,10 @@ public class OspfLoader {
 			break;
 		}
 	    }
-	    // zacleneni IPv6 do puvodniho modelu kde je do teto doby pouze IPv4
-	    // priznak zda jsou nacteny nejaky IPv6
+	    // IPv6 incorporation of the areas in the original model where by this time only IPv4
+	 // If the symptoms are loaded some IPv6
 	    model.setIpv6Loaded(!modelIPv6.getLinks().isEmpty());
-	    // prochazeni spoju
+	    // BROWSE joints
 	    boolean b = false;
 	    for (Link l6 : modelIPv6.getLinks()) {
 		b = false;
